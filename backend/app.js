@@ -6,13 +6,15 @@ const orderRoute = require('./routes/orderRoute');
 
 const app = express();
 
+// Middlewares
+app.use(express.json());
+
 app.use(orderRoute);
 
 port = process.env.PORT || 5000;
 
 const start = async () => {
   try {
-    console.log(process.env.MONGO_URI);
     await connectDb(process.env.MONGO_URI);
     app.listen(port, () => {
       console.log(`App listening on port ${port}...`);

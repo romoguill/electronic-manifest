@@ -1,20 +1,34 @@
-function getAllOrders(req, res) {
-  res.send('All Orders');
+const orderModel = require('../models/orderModel');
+
+async function getAllOrders(req, res) {
+  try {
+    const orders = await orderModel.find();
+    res.status(200).json({ orders });
+  } catch (error) {
+    res.json({ msg: 'Error finding orders' });
+  }
 }
 
-function getOrder(req, res) {
+async function getOrder(req, res) {
   res.send('Single Order');
 }
 
-function createOrder(req, res) {
-  res.send('Created Order');
+async function createOrder(req, res) {
+  try {
+    const order = req.body;
+    console.log(order);
+    await orderModel.create(order);
+    res.send('created');
+  } catch (error) {
+    console.log(error);
+  }
 }
 
-function updateOrder(req, res) {
+async function updateOrder(req, res) {
   res.send('Updated Order');
 }
 
-function deleteOrder(req, res) {
+async function deleteOrder(req, res) {
   res.send('Delete Order');
 }
 
