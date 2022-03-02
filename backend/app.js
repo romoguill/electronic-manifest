@@ -1,10 +1,10 @@
 const express = require('express');
 
+const orderRoute = require('./routes/orderRoute');
+
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send('hello');
-});
+app.use(orderRoute);
 
 port = process.env.PORT || 5000;
 
