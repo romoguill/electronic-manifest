@@ -1,35 +1,58 @@
-const orderModel = require('../models/orderModel');
+const Order = require('../models/orderModel');
 
 async function getAllOrders(req, res) {
   try {
-    const orders = await orderModel.find();
+    const orders = await Order.find();
     res.status(200).json({ orders });
   } catch (error) {
-    res.json({ msg: 'Error finding orders' });
+    res.status(500).json({ error });
   }
 }
 
 async function getOrder(req, res) {
-  res.send('Single Order');
+  try {
+    const orderId = req.params.id;
+    const order = await Order.find({ _id: orderId });
+    res.status(200).json({ order });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
 }
 
 async function createOrder(req, res) {
   try {
-    const order = req.body;
-    console.log(order);
-    await orderModel.create(order);
-    res.send('created');
+    const order = await Order.create(req.body);
+    res.status(201).json({ order });
   } catch (error) {
-    console.log(error);
+    res.status(500).json({ error });
   }
 }
 
 async function updateOrder(req, res) {
-  res.send('Updated Order');
+  try {
+    const orderId = req.params.id;
+    const order = await Order.findByIdAndUpdate({ _id: orderId }, req.body, {
+      runValidators: true,
+      new: true,
+    });
+
+    if (!order) {
+      throw new Error('Order not found');
+    }
+    res.status(200).json({ order });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
 }
 
 async function deleteOrder(req, res) {
-  res.send('Delete Order');
+  try {
+    const orderId = req.params.id;
+    await Order.findByIdAndRemove({ _id: orderId });
+    res.status(200).send('Order deleted');
+  } catch (error) {
+    res.status(500).json({ error });
+  }
 }
 
 module.exports = {
