@@ -4,6 +4,7 @@ const express = require('express');
 const connectDb = require('./database/connect');
 const orderRoute = require('./routes/orderRoute');
 const productRoute = require('./routes/productRoute');
+const customerRoute = require('./routes/customerRoute');
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 
 app.use(orderRoute);
 app.use(productRoute);
+app.use(customerRoute);
 
 port = process.env.PORT || 5000;
 
