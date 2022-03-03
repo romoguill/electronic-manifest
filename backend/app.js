@@ -3,6 +3,7 @@ const express = require('express');
 
 const connectDb = require('./database/connect');
 const orderRoute = require('./routes/orderRoute');
+const productRoute = require('./routes/productRoute');
 
 const app = express();
 
@@ -10,6 +11,7 @@ const app = express();
 app.use(express.json());
 
 app.use(orderRoute);
+app.use(productRoute);
 
 port = process.env.PORT || 5000;
 
