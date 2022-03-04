@@ -1,5 +1,7 @@
 require('dotenv').config();
+
 const express = require('express');
+const handlebars = require('express-handlebars');
 
 const connectDb = require('./database/connect');
 const orderRoute = require('./routes/orderRoute');
@@ -8,6 +10,10 @@ const customerRoute = require('./routes/customerRoute');
 const userRoute = require('./routes/userRoute');
 
 const app = express();
+
+// engine
+app.engine('hbs', handlebars());
+app.set('view engine', 'hbs');
 
 // Middlewares
 app.use(express.json());
